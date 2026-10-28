@@ -2,26 +2,39 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-const CreatNote = () => {
+const CreatNote = ({ navigation, allnotes, setAllNotes }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handlesave = () => {
+    const newNotes = { id: Date.now(), title: title, description: description };
+    setAllNotes((prevNotes) => [...prevNotes, newNotes]);
+    setTitle("");
+    setDescription("");
+    setShowMenu(false);
+    navigation.goBack();
+    console.log(allnotes);
+  };
+
+  const handleDelete = (id) => {
+    setAllNotes(allnotes.filter((item) => item.id !== id));
+  };
   return (
     <View style={styles.container}>
-      <Pressable style={styles.kebabBtn} onPress={() => setShowMenu(!showMenu)}>
+      <Pressable
+        style={styles.kebabBtn}
+        onPress={() => setShowMenu((prev) => !prev)}
+      >
         <Ionicons name="ellipsis-vertical" size={24} color="black" />
       </Pressable>
       {showMenu && (
         <View style={styles.menuContainer}>
-          <Pressable
-            style={styles.kebabText}
-            onPress={() => setShowMenu(false)}
-          >
+          <Pressable style={styles.kebabText} onPress={handlesave}>
             <Text>Save</Text>
           </Pressable>
 
-          <Pressable
-            style={styles.kebabText}
-            onPress={() => setShowMenu(false)}
-          >
+          <Pressable style={styles.kebabText} onPress={handleDelete}>
             <Text>Delete</Text>
           </Pressable>
         </View>
@@ -32,12 +45,16 @@ const CreatNote = () => {
         placeholder="Title"
         multiline={true}
         textAlignVertical="top"
+        value={title}
+        onChangeText={setTitle}
       />
       <TextInput
         style={styles.cardText}
         placeholder="Type something..."
         multiline={true}
         textAlignVertical="top"
+        value={description}
+        onChangeText={setDescription}
       />
     </View>
   );

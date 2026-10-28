@@ -1,17 +1,18 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CreatNote from "../MyComponents/CreateNote";
+import { useState } from "react";
+import CreateNote from "../MyComponents/CreateNote";
 import NoteHomePage from "../MyComponents/NotesHomePgae";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [allnotes, setAllNotes] = useState([]);
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Notes App"
-          component={NoteHomePage}
           options={{
             title: "Notes App",
             headerStyle: {
@@ -23,8 +24,24 @@ const App = () => {
               fontWeight: "bold",
             },
           }}
-        />
-        <Stack.Screen name="CreateNote" component={CreatNote} />
+        >
+          {(props) => (
+            <NoteHomePage
+              {...props}
+              allnotes={allnotes}
+              setAllNotes={setAllNotes}
+            />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="CreateNote">
+          {(props) => (
+            <CreateNote
+              {...props}
+              allnotes={allnotes}
+              setAllNotes={setAllNotes}
+            />
+          )}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
