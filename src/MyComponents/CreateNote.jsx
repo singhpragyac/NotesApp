@@ -2,24 +2,51 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-const CreatNote = ({ navigation, allnotes, setAllNotes }) => {
+const CreatNote = ({
+  navigation,
+  allnotes,
+  setAllNotes,
+  title,
+  setTitle,
+  description,
+  setDescription,
+  editNote,
+  setEditNote,
+}) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
 
   const handlesave = () => {
-    const newNotes = { id: Date.now(), title: title, description: description };
-    setAllNotes((prevNotes) => [...prevNotes, newNotes]);
-    setTitle("");
-    setDescription("");
-    setShowMenu(false);
-    navigation.goBack();
-    console.log(allnotes);
+    if (editNote !== null) {
+      console.log("editNote", editNote);
+      setAllNotes((prevNotes) =>
+        prevNotes.map((note) =>
+          note.id === editNote ? { ...note, title, description } : note,
+        ),
+      );
+      navigation.goBack();
+      setTitle("");
+      setDescription("");
+      setEditNote(null);
+    } else {
+      const newNotes = {
+        id: Date.now(),
+        title: title,
+        description: description,
+      };
+      setAllNotes((prevNotes) => [...prevNotes, newNotes]);
+      setTitle("");
+      setDescription("");
+      setShowMenu(false);
+      navigation.goBack();
+      console.log(allnotes);
+    }
   };
 
-  const handleDelete = (id) => {
-    setAllNotes(allnotes.filter((item) => item.id !== id));
+  const handleDelete = () => {
+    setTitle("");
+    setDescription("");
   };
+
   return (
     <View style={styles.container}>
       <Pressable
@@ -31,7 +58,7 @@ const CreatNote = ({ navigation, allnotes, setAllNotes }) => {
       {showMenu && (
         <View style={styles.menuContainer}>
           <Pressable style={styles.kebabText} onPress={handlesave}>
-            <Text>Save</Text>
+            <Text>{editNote !== null ? "Edit Note" : "Add Note"}</Text>
           </Pressable>
 
           <Pressable style={styles.kebabText} onPress={handleDelete}>
@@ -91,7 +118,7 @@ const styles = StyleSheet.create({
   kebabText: {
     paddingVertical: 4,
     height: 30,
-    width: 50,
+    width: 70,
     backgroundColor: "rgba(127, 199, 199, 0.4)",
     marginTop: 3,
     alignItems: "center",

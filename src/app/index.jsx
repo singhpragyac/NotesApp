@@ -8,6 +8,9 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [allnotes, setAllNotes] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [editNote, setEditNote] = useState(null);
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -30,6 +33,12 @@ const App = () => {
               {...props}
               allnotes={allnotes}
               setAllNotes={setAllNotes}
+              title={title}
+              setTitle={setTitle}
+              description={description}
+              setDescription={setDescription}
+              editNote={editNote}
+              setEditNote={setEditNote}
             />
           )}
         </Stack.Screen>
@@ -39,6 +48,12 @@ const App = () => {
               {...props}
               allnotes={allnotes}
               setAllNotes={setAllNotes}
+              title={title}
+              setTitle={setTitle}
+              description={description}
+              setDescription={setDescription}
+              editNote={editNote}
+              setEditNote={setEditNote}
             />
           )}
         </Stack.Screen>
