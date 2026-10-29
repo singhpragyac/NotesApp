@@ -42,7 +42,16 @@ const App = () => {
             />
           )}
         </Stack.Screen>
-        <Stack.Screen name="CreateNote">
+        <Stack.Screen
+          name="CreateNote"
+          options={{
+            title: "Create Notes",
+            headerStyle: {
+              backgroundColor: "#d4acd1",
+            },
+            headerTintColor: "white",
+          }}
+        >
           {(props) => (
             <CreateNote
               {...props}

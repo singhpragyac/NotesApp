@@ -40,7 +40,11 @@ const NoteHomepage = ({
   return (
     <View style={styles.container}>
       <Text style={styles.noteApp}>Notes App</Text>
-      <TextInput style={styles.searchBar} placeholder="Search note..." />
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Search note..."
+        placeholderTextColor={"#5e1257"}
+      />
 
       <FlatList
         data={allnotes}
@@ -69,17 +73,12 @@ const NoteHomepage = ({
                   setShowMenu(showMenu === item.id ? null : item.id)
                 }
               >
-                <Ionicons name="ellipsis-vertical" size={24} color="black" />
+                <Ionicons name="ellipsis-vertical" size={24} color="#94288b" />
               </Pressable>
               {showMenu === item.id && (
-                <View style={styles.menuContainer}>
-                  <Pressable
-                    style={styles.kebabText}
-                    onPress={() => handleDelete(item.id)}
-                  >
-                    <Text>Delete</Text>
-                  </Pressable>
-                </View>
+                <Pressable onPress={() => handleDelete(item.id)}>
+                  <Text style={styles.kebabText}>Delete</Text>
+                </Pressable>
               )}
               <Text
                 style={styles.cardTitle}
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   noteApp: {
-    color: "black",
+    color: "#941289",
     fontSize: 20,
     fontWeight: "800",
     paddingVertical: 10,
@@ -128,6 +127,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     fontSize: 18,
     paddingHorizontal: 15,
+    borderColor: "#c152b8",
   },
   addNotesBtn: {
     position: "absolute",
@@ -153,13 +153,13 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 20,
-    color: "black",
+    color: "#66155f",
     fontWeight: "500",
     flexShrink: 1,
   },
   cardText: {
     fontSize: 16,
-    color: "black",
+    color: "#c152b8",
     flexShrink: 1,
   },
   kebabBtn: {
@@ -172,12 +172,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   kebabText: {
-    paddingVertical: 4,
+    position: "absolute",
+    // top: 10,
+    // right: 0,
+    bottom: 4,
+    padding: 4,
     height: 30,
-    width: 50,
-    backgroundColor: "rgba(127, 199, 199, 0.4)",
-    marginTop: 3,
-    alignItems: "center",
+    width: 80,
+    backgroundColor: "#9e6098",
+    color: "white",
+    borderRadius: 5,
+    textAlign: "center",
+    overflow: "hidden",
+    zIndex: 10,
   },
 });
 export default NoteHomepage;
